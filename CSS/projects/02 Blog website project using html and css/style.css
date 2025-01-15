@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.blogContainer {
+    width: 80vw;
+}
+
+.header {
+    max-height: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1vh;
+    text-align: center;
+}
+
+.headerQuote {
+    width: 68%;
+}
+
+.cardsContainer {
+    display: grid;
+    gap: 1rem;
+    margin-top: 3vh;
+    justify-content: center;
+    /* grid-template-columns: repeat(1, 1fr); */
+    /* The below line make responsive website and no required any media query because it will autofit cards when width out of given range of 292px to 350px */
+    grid-template-columns: repeat(auto-fit, minmax(292px, 350px));
+}
+
+/* @media (min-width:707px) {
+    .cardsContainer{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width:1105px) {
+    .cardsContainer{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width:1670px) {
+    .cardsContainer{
+        grid-template-columns: repeat(4, 1fr);
+    }
+} */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    border: 2px solid black;
+}
+
+.card_image {
+    overflow: hidden;
+    height: 14rem;
+}
+
+.card_image img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8vh;
+    margin-top: 1vh;
+    align-items: center;
+    text-align: center;
+    margin: 0.5vh 0.5vw;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 1vw;
+}
+
+.card_footer_image {
+    height: 100%;
+    width: 25%;
+    background-color: rgb(226, 226, 226);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card_footer_content{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.card_footer_content_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+}
+
+.card_footer_btn {
+    align-self: center;
+}
+
+

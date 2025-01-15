@@ -1,0 +1,12 @@
+position: (static, relative, absolute, fixed, sticky);
+bydefault position is static of all elements
+
+we can move an element from top, bottom, left, right by giving the position to that element
+
+1) relative:- relative to main window (screen of computer or other device), gap maintain rahega.
+
+2) absolute:- relative to closest parent, gap maintain nhi hota.
+
+3) fixed:- fixed to entire web page.
+
+4) sticky:- fixed to closest parent container.

@@ -1,0 +1,13 @@
+display property in CSS
+1) display: block;
+    a) container will take whole space from left to right according to the parent
+    b) custom height and width, margin and padding can be set
+    c) example: div is a block element
+
+2) display: inline;
+    a) container will take space according to the content written inside it
+    b) custom height and width can't be set, only horizontal margin can set, also padding can't be change or set
+    c) example: span is an inline element
+
+3) display: inline-block;
+---> if we apply this property then the container work as a inline element i.e. take space according to the content inside it but we can change its width and height, margin and padding also like a block element.

@@ -1,0 +1,36 @@
+.container {
+    border: 5px solid black;
+    background-color: antiquewhite;
+    margin-top: 10px;
+    display: flex; /* by default it arrage element in row */
+    /* flex-direction: column; */
+    /* flex-wrap: wrap; */
+    justify-content: center; /* if flex-direction is row then justify-content works horizontally and if flex-direction is column then vice versa */
+    /* justify-content: space-around;
+    justify-content: space-between;
+    justify-content: space-evenly;
+    justify-content: start;
+    justify-content: end; */
+    /* justify-content: right; */
+    height: 500px;
+    align-items: center; /* it is opposite to justify-content i.e. it works in column and if flex-direction is column then works in row */
+}
+
+.box {
+    border: 2px solid black;
+    margin: 4px;
+    width: 100px;
+    height: 100px;
+}
+#box1 {
+    background-color: red;
+    flex-shrink: 4;
+    align-self: flex-start;
+}
+#box2 {
+    background-color: blue;
+}
+#box3 {
+    background-color: green;
+    /* flex-grow: 2; */
+}
