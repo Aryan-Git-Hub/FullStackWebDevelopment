@@ -14,3 +14,19 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+
+
+# Swiggy
+
+## Data of all resturants nearby, using latitude and longitude
+https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.71700&lng=75.83370&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+
+
+## Data of particular resturants
+Pizza Hut:- https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.71700&lng=75.83370&restaurantId=581971&catalog_qa=undefined&submitAction=ENTER
+
+# Proxy Server
+## To fetch above data from swiggy we need cross origin platform, because swiggy doen't allow to fetch data directly, we need an intermediate server to fetch data from swiggy than we get the data from this below server
+we have to restart temporary access for this proxy server time to time:- https://cors-anywhere.herokuapp.com

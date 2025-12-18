@@ -1,18 +1,21 @@
-import Header from "./components/Header"
 import Footer from "./components/Footer"
-import FoodOptions from "./components/FoodOptions"
-import Groceries from "./components/Groceries"
+import Restuarants from "./components/Restaurants"
+import { BrowserRouter, Routes, Route } from "react-router"
+import { Home } from "./components/Home"
 
 function App() {
 
-  return (
-    <>
-      <Header />
-      <FoodOptions />
-      <Groceries />
+return (
+    <BrowserRouter>
+      <Routes>
+        {/* Main Home Page Layout */}
+        <Route path="/" element={<Home />} />
+        {/* Restaurants Page */}
+        <Route path="/restaurants" element={<Restuarants />} />
+      </Routes>
       <Footer />
-    </>
-  )
+    </BrowserRouter>
+  );
 }
 
 export default App

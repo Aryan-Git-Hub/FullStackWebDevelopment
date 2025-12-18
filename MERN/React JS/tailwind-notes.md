@@ -127,3 +127,4 @@ Format: `border-[width]` or `border-[color]-[intensity]`
 | text-3xl | 1.875rem | 30px |
 | text-4xl | 2.25rem | 36px |
 | text-5xl | 3rem | 48px |
+| text-base | 1rem | 16px |
