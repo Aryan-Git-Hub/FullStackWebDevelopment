@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const ratingSVG = (
   <svg
     className="w-4 h-4 text-white fill-current"
@@ -9,9 +11,9 @@ const ratingSVG = (
 );
 export function RestCard({ restaurant }) {
   return (
-      <a
+      <Link
         className="transition-all duration-150 ease-in-out hover:scale-95"
-        href={restaurant?.cta?.link}
+        to={`/city/indore/${restaurant?.info?.id}`}
       >
         <div className="relative">
           <img
@@ -49,6 +51,6 @@ export function RestCard({ restaurant }) {
           </div>
           <div className="text-[#02060C99]">{restaurant?.info?.areaName}</div>
         </div>
-      </a>
+      </Link>
   );
 }
