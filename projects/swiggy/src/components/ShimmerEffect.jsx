@@ -15,7 +15,7 @@ export function ShimmerEffect() {
       </h2>
       <div className="grid grid-cols-4 gap-6">
         {arr.map((e) => (
-          <div>
+          <div key={e}>
             <div className="h-46 bg-gray-300 rounded-2xl"></div>
             <div className="mx-2 mt-2 flex flex-col gap-2">
               <div className="bg-gray-300 h-6"></div>

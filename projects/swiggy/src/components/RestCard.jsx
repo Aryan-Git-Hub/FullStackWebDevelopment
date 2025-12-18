@@ -9,9 +9,8 @@ const ratingSVG = (
 );
 export function RestCard({ restaurant }) {
   return (
-    <>
       <a
-        className="transition-all duration-150 ease-in-out hover:scale-95 cursor-pointer"
+        className="transition-all duration-150 ease-in-out hover:scale-95"
         href={restaurant?.cta?.link}
       >
         <div className="relative">
@@ -51,6 +50,5 @@ export function RestCard({ restaurant }) {
           <div className="text-[#02060C99]">{restaurant?.info?.areaName}</div>
         </div>
       </a>
-    </>
   );
 }
