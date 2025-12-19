@@ -1,19 +1,37 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import Navbar from "./Navbar";
 
+const options = [
+  { id: "veg", label: "Veg", color: "text-[#118A65]", icon: "●" },
+  { id: "non-veg", label: "Non-Veg", color: "text-[#E43B4F]", icon: "▲" },
+];
+
+const OptionIcon = ({ isVeg = {} }) => {
+  let opt = 0;
+  if (isVeg?.isVeg === undefined) opt = 1;
+  return (
+    <span
+      className={`h-4 w-4
+                border-2 rounded-sm ${options[opt].color} flex items-center justify-center text-[10px] p-1.5`}
+    >
+      {options[opt].icon}
+    </span>
+  );
+};
+
 const Partition = () => {
-  return (<div className="h-4 bg-[#02060C0D] mt-4"></div>);
-}
+  return <div className="h-4 bg-[#02060C0D] mt-4"></div>;
+};
 const DownArrow = ({ className = "w-4 h-4", recommendedDropDown }) => {
   return (
-    <svg 
+    <svg
       className={className}
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
       strokeWidth="2" // Increased thickness to match your screenshot
-      strokeLinecap="round" 
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path d="M6 9l6 6 6-6" />
@@ -25,11 +43,11 @@ export const UpArrow = ({ className = "w-4 h-4" }) => {
   return (
     <svg
       className={className}
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <path d="M18 15l-6-6-6 6" />
@@ -37,13 +55,82 @@ export const UpArrow = ({ className = "w-4 h-4" }) => {
   );
 };
 
-const RecommendedMenu = () => {
+const MenuCard = ({ item }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const price = item?.card?.info?.variantsV2?.variantGroups[1].variations.find(
+    (variation) => variation.default
+  ).price;
+  console.log(price);
   return (
-    <div>
-      Recommended content here...
+    <div className="py-1 flex justify-between">
+      <div className="w-138">
+        <div className="mb-1">
+          <OptionIcon isVeg={item?.card?.info} />
+        </div>
+        <h3 className="text-[#02060cbf] text-base leading-5.5 font-bold">
+          {item?.card?.info?.name}
+        </h3>
+        <div className="text-[#02060ceb]">₹{price}</div>
+        <div className="mt-3 flex items-center gap-0.5 text-[13px]">
+          <div className="text-[#1ba672]">★</div>
+          <div className="text-[#1ba672] font-bold">
+            {item?.card?.info?.ratings?.aggregatedRating?.rating}
+          </div>
+          <div className="text-[#02060c99]">
+            ({item?.card?.info?.ratings?.aggregatedRating?.ratingCountV2})
+          </div>
+        </div>
+        <div className="mt-3 text-[#02060c99] text-base leading-5.5 relative">
+          <p className={isExpanded ? "" : "line-clamp-2"}>
+            {item?.card?.info?.description}
+            {/* When expanded, show 'less' at the very end of the text string */}
+            {isExpanded && (
+              <button
+                onClick={() => setIsExpanded(false)}
+                className="ml-1 font-bold text-[#02060cbf] cursor-text inline"
+              >
+                less
+              </button>
+            )}
+          </p>
+          {/* When NOT expanded, place 'more' over the end of the 2nd line */}
+          {!isExpanded && item?.card?.info?.description?.length > 100 && (
+            <button
+              onClick={() => setIsExpanded(true)}
+              className="absolute bottom-0 right-0 bg-white pl-1 font-bold text-[#02060cbf] cursor-text"
+              style={{ boxShadow: "-10px 0 10px white" }}
+            >
+              ...more
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="">
+        <div className="relative">
+          <img
+            className="w-39 h-36 rounded-xl object-cover"
+            src={`https://media-assets.swiggy.com/swiggy/image/upload/${item.card.info.imageId}`}
+            alt=""
+          />
+          <div className="flex justify-center h-5">
+            <div className="bg-white absolute bottom-0 z-10 rounded-lg">
+              <button className="h-10 w-30 border border-[#02060c26] rounded-lg bg-white text-center text-[#1ba672] font-bold transition-colors duration-200 hover:bg-[#02060C26] cursor-pointer">
+                ADD
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="text-center text-[#02060c73] text-xs leading-5">
+          Customisable
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
+
+const MenuCardPartition = () => {
+  return <div className="my-6 h-[0.5px] bg-[#02060C26]"></div>;
+};
 
 export function RestuarantMenu() {
   const [restMenuData, setRestMenuData] = useState([]);
@@ -51,10 +138,6 @@ export function RestuarantMenu() {
   const [selected, setSelected] = useState("all");
   const [recommendedDropDown, setRecommendedDropDown] = useState(false);
 
-  const options = [
-    { id: "veg", label: "Veg", color: "text-[#1BA672]", icon: "●" },
-    { id: "non-veg", label: "Non-Veg", color: "text-[#E43B4F]", icon: "▲" },
-  ];
   useEffect(() => {
     async function fetchData() {
       // const proxyServer = "https://cors-anywhere.herokuapp.com/";
@@ -76,21 +159,40 @@ export function RestuarantMenu() {
     fetchData();
   }, []);
 
-const topPicks = useMemo(() => {
+  const [topPicks, recommendedOptions] = useMemo(() => {
     // Find the Top Picks section
-    const topPicksCard = restMenuData.find((card) => card?.card?.card?.title==="Top Picks");
-    const carouselData = topPicksCard?.card?.card?.carousel || [];
-    // Apply Filter Logic
-    if (selected==="veg") {
-        return carouselData.filter((item) => item?.dish?.info?.isVeg!==undefined);
-    } 
-    if (selected==="non-veg") {
-        return carouselData.filter((item) => item?.dish?.info?.isVeg===undefined);
-    }
-    return carouselData;
-}, [restMenuData, selected]); // Only re-calculates if these change, it doesn't re-render because now topPics is not state variable
+    const topPicksCard = restMenuData.find(
+      (card) => card?.card?.card?.title === "Top Picks"
+    );
+    let carouselData = topPicksCard?.card?.card?.carousel || [];
 
-  if (restMenuData.length == 0) return (<div>Loading...</div>);
+    // Find the Recommended section
+    const recommendedOptionsCard = restMenuData.find(
+      (card) => card?.card?.card?.title === "Recommended"
+    );
+    let itemCards = recommendedOptionsCard?.card?.card?.itemCards || [];
+
+    // Apply Filter Logic
+    if (selected === "veg") {
+      carouselData = carouselData.filter(
+        (item) => item?.dish?.info?.isVeg !== undefined
+      );
+      itemCards = itemCards.filter(
+        (item) => item?.card?.info?.isVeg !== undefined
+      );
+    }
+    if (selected === "non-veg") {
+      carouselData = carouselData.filter(
+        (item) => item?.dish?.info?.isVeg === undefined
+      );
+      itemCards = itemCards.filter(
+        (item) => item?.card?.info?.isVeg === undefined
+      );
+    }
+    return [carouselData, itemCards];
+  }, [restMenuData, selected]); // Only re-calculates if these change, it doesn't re-render because now topPics is not state variable
+
+  if (restMenuData.length == 0) return <div>Loading...</div>;
   return (
     <>
       <Navbar />
@@ -114,9 +216,9 @@ const topPicks = useMemo(() => {
                 className="hidden"
                 checked={selected === opt.id}
                 onChange={() => {
-        // If the same option is clicked, set it to 'all' or null, otherwise set the new ID
-        setSelected(selected === opt.id ? 'all' : opt.id);
-      }}
+                  // If the same option is clicked, set it to 'all' or null, otherwise set the new ID
+                  setSelected(selected === opt.id ? "all" : opt.id);
+                }}
               />
 
               {/* Background color handle */}
@@ -145,7 +247,7 @@ const topPicks = useMemo(() => {
           ${opt.id === "veg" ? "border-green-700" : "border-red-700"}
         `}
                   >
-                      {opt.icon}
+                    {opt.icon}
                   </div>
                 </div>
               </div>
@@ -155,7 +257,7 @@ const topPicks = useMemo(() => {
             Bestseller
           </div>
         </div>
-        <div className="my-6 h-[0.5px] bg-[#02060C26]"></div>
+        <MenuCardPartition />
         <div>
           <div>
             <div className="flex justify-between items-center text-xl font-bold mb-4">
@@ -163,9 +265,13 @@ const topPicks = useMemo(() => {
               <div></div>
             </div>
             <div className="flex flex-nowrap overflow-x-auto gap-3 no-scrollbar p-4">
-              {topPicks.length>0 && topPicks.map((item) => (
+              {topPicks.map((item) => (
                 <div className="flex-none w-[20vw]" key={item?.bannerId}>
-                  <img className="" src={`https://media-assets.swiggy.com/swiggy/image/upload/${item?.creativeId}`} alt="" />
+                  <img
+                    className=""
+                    src={`https://media-assets.swiggy.com/swiggy/image/upload/${item?.creativeId}`}
+                    alt=""
+                  />
                 </div>
               ))}
             </div>
@@ -173,12 +279,33 @@ const topPicks = useMemo(() => {
           <Partition />
           <div className="mx-4 mb-4 mt-6">
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-[#02060ceb] text-xl font-bold">Recommended (20)</h1>
-              <button className="p-1 cursor-pointer" onClick={()=>setRecommendedDropDown(!recommendedDropDown)}>
-              {recommendedDropDown ? <UpArrow className="w-5 h-5" /> : <DownArrow className="w-5 h-5" />}
+              <h1 className="text-[#02060ceb] text-xl font-bold">
+                Recommended ({recommendedOptions.length})
+              </h1>
+              <button
+                className="p-1 cursor-pointer"
+                onClick={() => setRecommendedDropDown(!recommendedDropDown)}
+              >
+                {recommendedDropDown ? (
+                  <UpArrow className="w-5 h-5" />
+                ) : (
+                  <DownArrow className="w-5 h-5" />
+                )}
               </button>
             </div>
-            {recommendedDropDown && <RecommendedMenu />}
+            {recommendedDropDown && (
+              <div>
+                {recommendedOptions.map(
+                  (item, index) =>
+                    item?.card?.info?.variantsV2?.variantGroups && (
+                      <React.Fragment key={item?.card?.info?.id}>
+                        {index > 0 && <MenuCardPartition />}
+                        <MenuCard item={item} />
+                      </React.Fragment>
+                    )
+                )}
+              </div>
+            )}
           </div>
           <Partition />
         </div>
